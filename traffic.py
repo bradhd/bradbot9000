@@ -62,7 +62,7 @@ def send_email(recipients,subject,message,format='text',attachments=[]):
         try:
             # send email
             gmail_user = 'bradbot9000@gmail.com'
-            gmail_pwd = 'br4disl4zy!'
+            gmail_pwd = gmail_password
             smtpserver = smtplib.SMTP("smtp.gmail.com:587")
             smtpserver.ehlo()
             smtpserver.starttls()
