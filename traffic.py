@@ -1,15 +1,18 @@
 from selenium import webdriver
 
+# read in Gmail password from external file
 with open('bradbot9000_gmail_pwd') as f:
 	gmail_password = f.read()
 
 driver = webdriver.PhantomJS()
 driver.get("http://webapps.sftc.org/trafficPayment/trafficpayment.dll")
 
-assert(driver.title == 'Traffic Fine Payment')
+# search for citation
 driver.find_element_by_name("CitationNum").send_keys("018413334")
 driver.find_element_by_id("SearchBtn").click()
 
+# check to see whether "citation not found" error message block is hidden from view
+# and set email subject/message accordingly
 s = driver.page_source
 i = s.find('<div id="errorBlock" style="">')
 if i>0:
@@ -18,8 +21,6 @@ if i>0:
 else:
 	subject = 'CITATION 018413334 FOUND'
 	message = 'pay up son: http://webapps.sftc.org/trafficPayment/trafficpayment.dll'
-
-print subject
 
 def send_email(recipients,subject,message,format='text',attachments=[]):
     import smtplib
